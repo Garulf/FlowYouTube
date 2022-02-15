@@ -1,0 +1,2 @@
+flox-lib==0.10.4
+youtube-search

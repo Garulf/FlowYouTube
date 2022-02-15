@@ -1,0 +1,12 @@
+{
+    "ID": "42DE0794627A48B2847E6FDF29DD5561",
+    "ActionKeyword": "yt",
+    "Name": "Youflowtube",
+    "Description": "Search YouTube.com",
+    "Author": "Garulf",
+    "Version": "0.0.1",
+    "Language": "python",
+    "Website": "https://github.com/Garulf/youflowtube",
+    "IcoPath": "./icon.png",
+    "ExecuteFileName": "run.py"
+}
