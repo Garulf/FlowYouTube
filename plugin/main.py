@@ -12,7 +12,7 @@ DEFAULT_SEARCH_LIMIT = 10
 TEN_MINUTES = 600
 MAX_CACHE_AGE = TEN_MINUTES
 
-class Youflowtube(Flox):
+class YouflowTube(Flox):
 
     def _query(self, query):
         if query != '':
@@ -45,4 +45,4 @@ class Youflowtube(Flox):
         pass
 
 if __name__ == "__main__":
-    Youflowtube()
+    YouflowTube()

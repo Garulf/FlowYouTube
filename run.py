@@ -6,7 +6,7 @@ sys.path.append(plugindir)
 sys.path.append(os.path.join(plugindir, "lib"))
 sys.path.append(os.path.join(plugindir, "plugin"))
 
-from plugin.main import Youflowtube
+from plugin.main import YouflowTube
 
 if __name__ == "__main__":
-    Youflowtube()
+    YouflowTube()
