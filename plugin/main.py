@@ -4,13 +4,19 @@ from flox import Flox, utils
 from youtube_search import YoutubeSearch
 
 BASE_URL = 'https://www.youtube.com'
+THUMBNAIL_URL = 'https://i.ytimg.com/vi'
 DEFAULT_THUMB = 'default'
-HIGH_QUALITY_THUMB = 'hq720'
 THUMB_EXT = 'jpg'
 MAX_THREADS = 10
 DEFAULT_SEARCH_LIMIT = 10
 TEN_MINUTES = 600
 MAX_CACHE_AGE = TEN_MINUTES
+
+def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
+    """
+    Get thumbnail url
+    """
+    return f'{THUMBNAIL_URL}/{id}/{thumb_type}.{THUMB_EXT}'
 
 class YouFlowTube(Flox):
 
@@ -25,19 +31,20 @@ class YouFlowTube(Flox):
         results = YoutubeSearch(query, max_results=limit).to_dict()
         for item in results:
             with utils.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-                subtitle = f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})'
-                thumbnail = item["thumbnails"][-1].replace(HIGH_QUALITY_THUMB, DEFAULT_THUMB)
-                file_name = f'{item["id"]}.{THUMB_EXT}'
-                url = f'{BASE_URL}{item["url_suffix"]}'
                 icon = self.icon
                 if self.settings.get('download_tumbs', True):
-                    icon = utils.get_icon(thumbnail, self.name, file_name=file_name, executor=executor)
+                    icon = utils.get_icon(
+                        get_thumbnail(item['id']), 
+                        Path(self.name, 'thumbnails'), 
+                        file_name=f'{item["id"]}.{THUMB_EXT}', 
+                        executor=executor
+                    )
                 self.add_item(
                     title=item['title'],
-                    subtitle=subtitle,
+                    subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
                     icon=icon,
                     method=self.browser_open,
-                    parameters=[url]
+                    parameters=[f'{BASE_URL}{item["url_suffix"]}']
                 )
         return self._results
 
