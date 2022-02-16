@@ -1,2 +1,2 @@
-flox-lib==0.10.4
+flox-lib==0.10.5
 youtube-search
