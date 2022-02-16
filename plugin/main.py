@@ -1,4 +1,5 @@
 from pathlib import Path
+from distutils.util import strtobool
 from flox import Flox, utils, ICON_BROWSER
 
 from youtube_search import YoutubeSearch
@@ -27,7 +28,7 @@ class FlowYouTube(Flox):
         return self._results
 
     def search(self, query):
-        limit = self.settings.get('max_search_results', DEFAULT_SEARCH_LIMIT)
+        limit = int(self.settings.get('max_search_results', DEFAULT_SEARCH_LIMIT))
         results = YoutubeSearch(query, max_results=limit).to_dict()
         for item in results:
             with utils.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
@@ -37,7 +38,8 @@ class FlowYouTube(Flox):
     def result(self, item, executor):
         icon = self.icon
         url = f'{BASE_URL}{item["url_suffix"]}'
-        if self.settings.get('download_tumbs', True):
+        download_thumbs = strtobool(self.settings.get('download_thumbs', True))
+        if download_thumbs:
             icon = utils.get_icon(
                 get_thumbnail(item['id']), 
                 Path(self.name, 'thumbnails'), 
