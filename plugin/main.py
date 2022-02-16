@@ -1,5 +1,5 @@
 from pathlib import Path
-from flox import Flox, utils
+from flox import Flox, utils, ICON_BROWSER
 
 from youtube_search import YoutubeSearch
 
@@ -36,6 +36,7 @@ class YouFlowTube(Flox):
 
     def result(self, item, executor):
         icon = self.icon
+        url = f'{BASE_URL}{item["url_suffix"]}'
         if self.settings.get('download_tumbs', True):
             icon = utils.get_icon(
                 get_thumbnail(item['id']), 
@@ -48,11 +49,18 @@ class YouFlowTube(Flox):
             subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
             icon=icon,
             method=self.browser_open,
-            parameters=[f'{BASE_URL}{item["url_suffix"]}']
+            parameters=[url],
+            context=[url]
         )
 
     def context_menu(self, data):
-        pass
+        url = data[0]
+        self.add_item(
+            title='Open in browser',
+            icon=ICON_BROWSER,
+            method=self.browser_open,
+            parameters=[url]
+        )
 
 if __name__ == "__main__":
     YouFlowTube()
