@@ -20,33 +20,36 @@ def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
 
 class YouFlowTube(Flox):
 
-    def _query(self, query):
+    def query(self, query):
         if query != '':
             path = Path(utils.gettempdir(), self.name)
-            self._results = utils.cache(query, max_age=MAX_CACHE_AGE, dir=path)(self.query)(query)
+            self._results = utils.cache(query, max_age=MAX_CACHE_AGE, dir=path)(self.search)(query)
         return self._results
 
-    def query(self, query):
+    def search(self, query):
         limit = self.settings.get('max_search_results', DEFAULT_SEARCH_LIMIT)
         results = YoutubeSearch(query, max_results=limit).to_dict()
         for item in results:
             with utils.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-                icon = self.icon
-                if self.settings.get('download_tumbs', True):
-                    icon = utils.get_icon(
-                        get_thumbnail(item['id']), 
-                        Path(self.name, 'thumbnails'), 
-                        file_name=f'{item["id"]}.{THUMB_EXT}', 
-                        executor=executor
-                    )
-                self.add_item(
-                    title=item['title'],
-                    subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
-                    icon=icon,
-                    method=self.browser_open,
-                    parameters=[f'{BASE_URL}{item["url_suffix"]}']
-                )
+                self.result(item, executor)
         return self._results
+
+    def result(self, item, executor):
+        icon = self.icon
+        if self.settings.get('download_tumbs', True):
+            icon = utils.get_icon(
+                get_thumbnail(item['id']), 
+                Path(self.name, 'thumbnails'), 
+                file_name=f'{item["id"]}.{THUMB_EXT}', 
+                executor=executor
+            )
+        self.add_item(
+            title=item['title'],
+            subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
+            icon=icon,
+            method=self.browser_open,
+            parameters=[f'{BASE_URL}{item["url_suffix"]}']
+        )
 
     def context_menu(self, data):
         pass
