@@ -18,7 +18,7 @@ def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
     """
     return f'{THUMBNAIL_URL}/{id}/{thumb_type}.{THUMB_EXT}'
 
-class YouFlowTube(Flox):
+class FlowYouTube(Flox):
 
     def query(self, query):
         if query != '':
@@ -63,4 +63,4 @@ class YouFlowTube(Flox):
         )
 
 if __name__ == "__main__":
-    YouFlowTube()
+    FlowYouTube()
