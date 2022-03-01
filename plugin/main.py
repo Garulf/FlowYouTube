@@ -1,5 +1,4 @@
 from pathlib import Path
-from distutils.util import strtobool
 from flox import Flox, utils, ICON_BROWSER
 
 from youtube_search import YoutubeSearch
@@ -38,7 +37,7 @@ class FlowYouTube(Flox):
     def result(self, item, executor):
         icon = self.icon
         url = f'{BASE_URL}{item["url_suffix"]}'
-        download_thumbs = strtobool(self.settings.get('download_thumbs', True))
+        download_thumbs = self.settings.get('download_thumbs', True)
         if download_thumbs:
             icon = utils.get_icon(
                 get_thumbnail(item['id']), 
