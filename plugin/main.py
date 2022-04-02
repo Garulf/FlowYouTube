@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 from flox import Flox, utils, ICON_BROWSER
 
 from youtube_search import YoutubeSearch
@@ -11,6 +12,8 @@ MAX_THREADS = 10
 DEFAULT_SEARCH_LIMIT = 10
 TEN_MINUTES = 600
 MAX_CACHE_AGE = TEN_MINUTES
+LANGUAGES_FILE = 'languages.json'
+REGIONS_FILE = 'regions.json'
 
 def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
     """
@@ -20,15 +23,27 @@ def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
 
 class FlowYouTube(Flox):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        with open(Path(self.plugindir, REGIONS_FILE), 'r', encoding='utf-8') as f:
+            regions = json.load(f)
+            self.region = regions[self.settings.get('region', 'Default')]
+        with open(Path(self.plugindir, LANGUAGES_FILE), 'r', encoding='utf-8') as f:
+            languages = json.load(f)
+            self.language = languages[self.settings.get('language', 'Default')]
+
+
+
     def query(self, query):
         if query != '':
             path = Path(utils.gettempdir(), self.name)
-            self._results = utils.cache(query, max_age=MAX_CACHE_AGE, dir=path)(self.search)(query)
+            cache_file = "_".join(filter(None, [query, self.language, self.region]))
+            self._results = utils.cache(cache_file, max_age=MAX_CACHE_AGE, dir=path)(self.search)(query)
         return self._results
 
     def search(self, query):
         limit = int(self.settings.get('max_search_results', DEFAULT_SEARCH_LIMIT))
-        results = YoutubeSearch(query, max_results=limit).to_dict()
+        results = YoutubeSearch(query, max_results=limit, language=self.language, region=self.region).to_dict()
         for item in results:
             with utils.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
                 self.result(item, executor)
