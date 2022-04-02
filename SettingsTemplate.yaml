@@ -17,3 +17,207 @@ body:
       label: 'Download Thumbnails:'
       defaultValue: "true"
       description: Downloading thumbnails can slow down results
+  - type: dropdown
+    attributes:
+      name: language
+      label: 'Language:'
+      defaultValue: Default
+      options:
+        - Default
+        - Afrikaans
+        - Azərbaycan
+        - Bahasa Indonesia
+        - Bahasa Malaysia
+        - Bosanski
+        - Català
+        - Čeština
+        - Dansk
+        - Deutsch
+        - Eesti
+        - English (India)
+        - English (UK)
+        - English (US)
+        - Español (España)
+        - Español (Latinoamérica)
+        - Español (US)
+        - Euskara
+        - Filipino
+        - Français
+        - Français (Canada)
+        - Galego
+        - Hrvatski
+        - IsiZulu
+        - Íslenska
+        - Italiano
+        - Kiswahili
+        - Latviešu valoda
+        - Lietuvių
+        - Magyar
+        - Nederlands
+        - Norsk
+        - O‘zbek
+        - Polski
+        - Português
+        - Português (Brasil)
+        - Română
+        - Shqip
+        - Slovenčina
+        - Slovenščina
+        - Srpski
+        - Suomi
+        - Svenska
+        - Tiếng Việt
+        - Türkçe
+        - Беларуская
+        - Български
+        - Кыргызча
+        - Қазақ Тілі
+        - Македонски
+        - Монгол
+        - Русский
+        - Српски
+        - Українська
+        - Ελληνικά
+        - Հայերեն
+        - עברית
+        - اردو
+        - العربية
+        - فارسی
+        - नेपाली
+        - मराठी
+        - हिन्दी
+        - অসমীয়া
+        - বাংলা
+        - ਪੰਜਾਬੀ
+        - ગુજરાતી
+        - ଓଡ଼ିଆ
+        - தமிழ்
+        - తెలుగు
+        - ಕನ್ನಡ
+        - മലയാളം
+        - සිංහල
+        - ภาษาไทย
+        - ລາວ
+        - ဗမာ
+        - ქართული
+        - አማርኛ
+        - ខ្មែរ
+        - 中文 (简体)
+        - 中文 (繁體)
+        - 中文 (香港)
+        - 日本語
+        - 한국어
+  - type: dropdown
+    attributes:
+      name: region
+      label: 'Region:'
+      defaultValue: Default
+      options:
+        - Default
+        - Algeria
+        - Argentina
+        - Australia
+        - Austria
+        - Azerbaijan
+        - Bahrain
+        - Bangladesh
+        - Belarus
+        - Belgium
+        - Bolivia
+        - Bosnia and Herzegovina
+        - Brazil
+        - Bulgaria
+        - Canada
+        - Chile
+        - Colombia
+        - Costa Rica
+        - Croatia
+        - Cyprus
+        - Czechia
+        - Denmark
+        - Dominican Republic
+        - Ecuador
+        - Egypt
+        - El Salvador
+        - Estonia
+        - Finland
+        - France
+        - Georgia
+        - Germany
+        - Ghana
+        - Greece
+        - Guatemala
+        - Honduras
+        - Hong Kong
+        - Hungary
+        - Iceland
+        - India
+        - Indonesia
+        - Iraq
+        - Ireland
+        - Israel
+        - Italy
+        - Jamaica
+        - Japan
+        - Jordan
+        - Kazakhstan
+        - Kenya
+        - Kuwait
+        - Latvia
+        - Lebanon
+        - Libya
+        - Liechtenstein
+        - Lithuania
+        - Luxembourg
+        - Malaysia
+        - Malta
+        - Mexico
+        - Montenegro
+        - Morocco
+        - Nepal
+        - Netherlands
+        - New Zealand
+        - Nicaragua
+        - Nigeria
+        - North Macedonia
+        - Norway
+        - Oman
+        - Pakistan
+        - Panama
+        - Papua New Guinea
+        - Paraguay
+        - Peru
+        - Philippines
+        - Poland
+        - Portugal
+        - Puerto Rico
+        - Qatar
+        - Romania
+        - Russia
+        - Saudi Arabia
+        - Senegal
+        - Serbia
+        - Singapore
+        - Slovakia
+        - Slovenia
+        - South Africa
+        - South Korea
+        - Spain
+        - Sri Lanka
+        - Sweden
+        - Switzerland
+        - Taiwan
+        - Tanzania
+        - Thailand
+        - Tunisia
+        - Turkey
+        - Uganda
+        - Ukraine
+        - United Arab Emirates
+        - United Kingdom
+        - United States
+        - Uruguay
+        - Venezuela
+        - Vietnam
+        - Yemen
+        - Zimbabwe
