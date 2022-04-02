@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 from flox import Flox, utils, ICON_BROWSER
 
 from youtube_search import YoutubeSearch
@@ -11,6 +12,8 @@ MAX_THREADS = 10
 DEFAULT_SEARCH_LIMIT = 10
 TEN_MINUTES = 600
 MAX_CACHE_AGE = TEN_MINUTES
+LANGUAGES_FILE = 'languages.json'
+REGIONS_FILE = 'regions.json'
 
 def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
     """
@@ -19,6 +22,17 @@ def get_thumbnail(id:str, thumb_type:str=DEFAULT_THUMB, ext:str=THUMB_EXT):
     return f'{THUMBNAIL_URL}/{id}/{thumb_type}.{THUMB_EXT}'
 
 class FlowYouTube(Flox):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        with open(Path(self.plugindir, REGIONS_FILE), 'r', encoding='utf-8') as f:
+            regions = json.load(f)
+            self.region = regions[self.settings.get('region', 'Default')]
+        with open(Path(self.plugindir, LANGUAGES_FILE), 'r', encoding='utf-8') as f:
+            languages = json.load(f)
+            self.language = languages[self.settings.get('language', 'Default')]
+
+
 
     def query(self, query):
         if query != '':
