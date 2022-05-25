@@ -16,10 +16,10 @@ jobs:
         id: check_update
         run: |
           packages="$(pip list --path=./lib --outdated)"
-           if $(echo $packages | grep Flox-lib -q); then
-             echo "Flox-lib is out of date"
-           else
-             echo "Flox-lib is up to date"
+          if $(echo $packages | grep Flox-lib -q); then
+            echo "Flox-lib is out of date"
+          else
+            echo "Flox-lib is up to date"
           fi
   test:
     needs: [check_update]
