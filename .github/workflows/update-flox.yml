@@ -1,0 +1,37 @@
+name: "Update Flox"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  check_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: './'
+      - name: Check for updated packages
+        id: check_update
+        run: |
+          packages="$(pip list --path=./lib --outdated)"
+           if $(echo $packages | grep Flox-lib) {
+             echo "Flox-lib is out of date"
+             echo '::set-output name=update_packages::true'
+           } 
+           else {
+             echo "Flox-lib is up to date"
+             echo '::set-output name=update_packages::false'
+           }
+  test:
+    needs: [check_update]
+    uses: ./.github/workflows/test-plugin.yml
+    if: ${{ steps.check_update.outputs.update_packages }}
+    with:
+      workflow_dispatch:
+        jobs:
+          test_run:
+            matrix:
+              flow_tags: ['latest']
+              python_ver: ['3.8', '3.9'. '3.10']
