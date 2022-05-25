@@ -27,4 +27,4 @@ jobs:
   test:
     needs: [check_update]
     uses: ./.github/workflows/test-plugin.yml
-    if: ${{ jobs.step.check_update.outputs.update_packages }}
+    if: steps.check_update.outputs.update_packages == 'true'
