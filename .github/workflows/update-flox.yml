@@ -16,14 +16,13 @@ jobs:
         id: check_update
         run: |
           packages="$(pip list --path=./lib --outdated)"
-           if $(echo $packages | grep Flox-lib) {
+           if $(echo $packages | grep Flox-lib -q); then
              echo "Flox-lib is out of date"
              echo '::set-output name=update_packages::true'
-           } 
-           else {
+           else
              echo "Flox-lib is up to date"
              echo '::set-output name=update_packages::false'
-           }
+          fi
   test:
     needs: [check_update]
     uses: ./.github/workflows/test-plugin.yml
