@@ -28,10 +28,6 @@ jobs:
     needs: [check_update]
     uses: ./.github/workflows/test-plugin.yml
     if: ${{ steps.check_update.outputs.update_packages }}
-    with:
-      workflow_dispatch:
-        jobs:
-          test_run:
-            matrix:
-              flow_tags: ['latest']
-              python_ver: ['3.8', '3.9'. '3.10']
+    matrix:
+      flow_tags: ['latest']
+      python_ver: ['3.8', '3.9'. '3.10']
