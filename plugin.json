@@ -1,12 +1,12 @@
 {
-    "ID": "42DE0794627A48B2847E6FDF29DD5561",
-    "ActionKeyword": "yt",
-    "Name": "FlowYouTube",
-    "Description": "Search YouTube.com",
-    "Author": "Garulf",
-    "Version": "1.0.0",
-    "Language": "python",
-    "Website": "https://github.com/Garulf/FlowYouTube",
-    "IcoPath": "./icon.png",
-    "ExecuteFileName": "run.py"
+  "ID": "42DE0794627A48B2847E6FDF29DD5561",
+  "ActionKeyword": "yt",
+  "Name": "FlowYouTube",
+  "Description": "Search YouTube.com",
+  "Author": "Garulf",
+  "Version": "2.0.0",
+  "Language": "python",
+  "Website": "https://github.com/Garulf/FlowYouTube",
+  "IcoPath": "./icon.png",
+  "ExecuteFileName": "run.py"
 }
