@@ -221,3 +221,11 @@ body:
         - Vietnam
         - Yemen
         - Zimbabwe
+  - type: input
+    attributes:
+      name: program_path
+      label: "Program Path:"
+  - type: input
+    attributes:
+      name: program_args
+      label: "Program Arguments:"
