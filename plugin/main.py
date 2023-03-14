@@ -1,7 +1,7 @@
 from pathlib import Path
 from subprocess import Popen
 import json
-from flox import Flox, utils, ICON_BROWSER
+from flox import Flox, utils, clipboard, ICON_BROWSER, ICON_COPY
 
 from youtube_search import YoutubeSearch
 
@@ -69,6 +69,7 @@ class FlowYouTube(Flox):
             title=item['title'],
             subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
             icon=icon,
+            CopyText=url,
             method=self.browser_open,
             parameters=[url],
             context=[url]
@@ -94,9 +95,19 @@ class FlowYouTube(Flox):
                 method=self.open_in_program,
                 parameters=[program_path, args]
             )
+        self.add_item(
+            title='Copy to clipboard',
+            subtitle=url,
+            icon=ICON_COPY,
+            method=self.copy_to_clipboard,
+            parameters=[url]
+        )
 
     def open_in_program(self, program_path, args):
         proc = Popen([program_path, args])
+
+    def copy_to_clipboard(self, url):
+        clipboard.put(url)
 
 
 if __name__ == "__main__":
