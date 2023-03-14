@@ -69,6 +69,7 @@ class FlowYouTube(Flox):
             title=item['title'],
             subtitle=f'{item["publish_time"]} - {item["channel"]} (Length: {item["duration"]})',
             icon=icon,
+            CopyText=url,
             method=self.browser_open,
             parameters=[url],
             context=[url]
