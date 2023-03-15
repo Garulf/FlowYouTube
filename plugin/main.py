@@ -3,7 +3,10 @@ from subprocess import Popen
 import json
 from flox import Flox, utils, clipboard, ICON_BROWSER, ICON_COPY
 
+
 from youtube_search import YoutubeSearch
+from pytube import YouTube
+
 
 BASE_URL = 'https://www.youtube.com'
 THUMBNAIL_URL = 'https://i.ytimg.com/vi'
@@ -102,12 +105,29 @@ class FlowYouTube(Flox):
             method=self.copy_to_clipboard,
             parameters=[url]
         )
+        for stream in YouTube(url).streams.filter(type="video", progressive=True):
+
+            title = f"Download this video at {stream.resolution}"
+            self.add_item(
+                title=title,
+                subtitle=f"File size: {stream.filesize_mb:.2f} MB - Codec: {stream.video_codec}",
+                method=self.download_video,
+                parameters=[url, stream.itag]
+            )
 
     def open_in_program(self, program_path, args):
         proc = Popen([program_path, args])
 
     def copy_to_clipboard(self, url):
         clipboard.put(url)
+
+    def download_video(self, url, itag):
+        python_setting = Path(self.app_settings["PluginSettings"].get("PythonDirectory"))
+        python = Path(python_setting, "pythonw.exe")
+        script = Path(self.plugindir, "plugin", "download.py")
+        lib = Path(self.plugindir, "lib")
+        proc = Popen([python, script, url, str(itag), lib])
+        self.logger.warning([python, script, url, str(itag), lib])
 
 
 if __name__ == "__main__":
