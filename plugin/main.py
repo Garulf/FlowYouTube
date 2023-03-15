@@ -122,7 +122,7 @@ class FlowYouTube(Flox):
         clipboard.put(url)
 
     def download_video(self, url, itag):
-        python_setting = Path(self.app_settings["PluginSettings"].get("PythonDirectory"))
+        python_setting = Path(self.app_settings["PluginSettings"].get("PythonExecutablePath"))
         python = Path(python_setting, "pythonw.exe")
         script = Path(self.plugindir, "plugin", "download.py")
         lib = Path(self.plugindir, "lib")
