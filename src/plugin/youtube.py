@@ -136,4 +136,4 @@ def context_menu(data: List[str]) -> List[Result]:
 
 @plugin.on_method
 def open_in_program(program_path: str, args: str) -> None:
-    Popen([program_path, args])
+    Popen(f'"{program_path}" {args}')

@@ -146,11 +146,12 @@ def test_empty_program_arguments_pass_the_url(settings):
     assert custom["JsonRPCAction"]["Parameters"] == [settings["program_path"], url]
 
 
-def test_open_in_program_starts_the_program(monkeypatch):
+def test_open_in_program_passes_arguments_as_typed(monkeypatch):
     started = []
     monkeypatch.setattr(youtube, "Popen", started.append)
-    asyncio.run(youtube.plugin._event_handler.trigger_event("open_in_program", "mpv.exe", "https://youtu.be/x"))
-    assert started == [["mpv.exe", "https://youtu.be/x"]]
+    program = r"C:\Program Files\DAUM\PotPlayer\PotPlayerMini64.exe"
+    asyncio.run(youtube.plugin._event_handler.trigger_event("open_in_program", program, "/add https://youtu.be/x"))
+    assert started == [f'"{program}" /add https://youtu.be/x']
 
 
 def test_manifest_keeps_plugin_identity():
