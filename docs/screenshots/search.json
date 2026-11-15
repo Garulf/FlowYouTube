@@ -1,0 +1,31 @@
+{
+  "keyword": "yt",
+  "query": "sourdough bread",
+  "icon": "../../data/icon.png",
+  "max_results": 4,
+  "selection": 0,
+  "results": [
+    {
+      "title": "Sourdough bread for beginners, start to finish",
+      "subtitle": "2 years ago - The Bread Shed (Length: 18:42)",
+      "thumb": ["#C8873A", "#6B3F1D"]
+    },
+    {
+      "title": "How to feed and keep a sourdough starter",
+      "subtitle": "8 months ago - Crumb & Crust (Length: 9:15)",
+      "thumb": ["#E3C9A0", "#9C6B3C"]
+    },
+    {
+      "title": "Shaping a boule: three methods compared",
+      "subtitle": "1 year ago - Weekend Baker (Length: 12:07)",
+      "thumb": ["#A35A2A", "#3E2414"]
+    },
+    {
+      "title": "Why is my sourdough so dense?",
+      "subtitle": "3 weeks ago - The Bread Shed (Length: 6:58)",
+      "thumb": ["#D9A55B", "#7A4A22"]
+    }
+  ],
+  "query_suggestion": "",
+  "show_caret": false
+}
