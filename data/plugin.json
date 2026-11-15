@@ -5,8 +5,8 @@
   "Description": "Search YouTube.com",
   "Author": "Garulf",
   "Version": "2.1.0",
-  "Language": "python",
+  "Language": "python_v2",
   "Website": "https://github.com/Garulf/FlowYouTube",
-  "IcoPath": "./icon.png",
+  "IcoPath": "icon.png",
   "ExecuteFileName": "run.py"
 }
