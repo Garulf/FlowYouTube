@@ -125,7 +125,7 @@ def context_menu(data: List[str]) -> List[Result]:
     results = [menu_item("Open in browser", "", flow_icon("Browser")).add_action(api.open_url(url))]
     program_path = plugin.settings.get("program_path")
     if program_path:
-        args = plugin.settings.get("program_args", "{url}").format(url=url)
+        args = (plugin.settings.get("program_args") or "{url}").format(url=url)
         results.append(
             menu_item(f"Open with: {PureWindowsPath(program_path).name}", args, program_path)
             .add_action(open_in_program, [program_path, args])

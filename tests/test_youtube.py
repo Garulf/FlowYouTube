@@ -138,6 +138,14 @@ def test_context_menu_opens_custom_program(settings):
     }
 
 
+def test_empty_program_arguments_pass_the_url(settings):
+    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    settings.update({"program_path": r"C:\Tools\mpv\mpv.exe", "program_args": ""})
+    custom = run("context_menu", [url])[1]
+    assert custom["SubTitle"] == url
+    assert custom["JsonRPCAction"]["Parameters"] == [settings["program_path"], url]
+
+
 def test_open_in_program_starts_the_program(monkeypatch):
     started = []
     monkeypatch.setattr(youtube, "Popen", started.append)
