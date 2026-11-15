@@ -83,7 +83,10 @@ def video_url(video: dict) -> str:
 
 
 def video_subtitle(video: dict) -> str:
-    return f"{video['publish_time']} - {video['channel']} (Length: {video['duration']})"
+    subtitle = " - ".join(str(part) for part in (video["publish_time"], video["channel"]) if part)
+    if video["duration"]:
+        subtitle += f" (Length: {video['duration']})"
+    return subtitle
 
 
 def video_result(video: dict) -> Result:

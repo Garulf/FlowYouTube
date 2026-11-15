@@ -38,6 +38,18 @@ def test_results_keep_youtube_order_and_open_the_video(search):
     assert first["Preview"]["PreviewImagePath"] == first["IcoPath"]
 
 
+def test_live_streams_leave_out_missing_length_and_date(search):
+    search.videos = [{
+        "id": "jfKfPfyJRdk",
+        "title": "Rain sounds radio",
+        "channel": "Quiet Hours",
+        "duration": 0,
+        "publish_time": 0,
+        "url_suffix": "/watch?v=jfKfPfyJRdk",
+    }]
+    assert run("query", "rain")[0]["SubTitle"] == "Quiet Hours"
+
+
 def test_mix_results_open_the_video_without_the_playlist(search):
     mix = run("query", "sourdough")[1]
     url = "https://www.youtube.com/watch?v=a1b2c3d4e5f"
