@@ -50,6 +50,6 @@ def search(monkeypatch, settings):
     FakeSearch.videos = VIDEOS
     FakeSearch.error = None
     youtube._cache.clear()
-    monkeypatch.setattr(youtube, "YoutubeSearch", FakeSearch)
+    monkeypatch.setattr(youtube, "VideoSearch", FakeSearch)
     yield FakeSearch
     youtube._cache.clear()

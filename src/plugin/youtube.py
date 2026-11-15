@@ -5,6 +5,7 @@ import json
 import time
 from pathlib import Path, PureWindowsPath
 from subprocess import Popen
+from urllib.parse import quote_plus
 from typing import Any, Dict, List, Optional, Tuple
 
 from pyflowlauncher import FlowLauncherV2, Plugin, Result, api
@@ -18,6 +19,8 @@ BASE_URL = "https://www.youtube.com"
 THUMBNAIL_URL = "https://i.ytimg.com/vi/{id}/default.jpg"
 DEFAULT_SEARCH_LIMIT = 10
 MAX_CACHE_AGE = 600
+SEARCH_ATTEMPTS = 3
+REQUEST_TIMEOUT = 10
 
 plugin = Plugin(launcher=FlowLauncherV2())
 
@@ -28,6 +31,20 @@ def load_codes(file_name: str) -> Dict[str, Optional[str]]:
 
 LANGUAGES = load_codes("languages.json")
 REGIONS = load_codes("regions.json")
+
+class NoResultsPage(Exception):
+    pass
+
+
+class VideoSearch(YoutubeSearch):
+    def _search(self) -> List[dict]:
+        url = f"https://youtube.com/results?search_query={quote_plus(self.search_terms)}"
+        for _ in range(SEARCH_ATTEMPTS):
+            page = self.session.get(url, timeout=REQUEST_TIMEOUT).text
+            if "ytInitialData" in page:
+                return self._parse_html(page)[: self.max_results]
+        raise NoResultsPage("YouTube answered without search results. Try again in a moment.")
+
 
 _cache: Dict[Tuple[Any, ...], Tuple[float, List[dict]]] = {}
 
@@ -61,7 +78,7 @@ def search_videos(query: str, limit: int, lang: Optional[str], reg: Optional[str
         del _cache[key]
     key = (query, limit, lang, reg)
     if key not in _cache:
-        videos = YoutubeSearch(query, max_results=limit, language=lang, region=reg).to_dict()
+        videos = VideoSearch(query, max_results=limit, language=lang, region=reg).to_dict()
         _cache[key] = (now, videos)
     return _cache[key][1]
 
@@ -117,6 +134,11 @@ async def query(query: str) -> List[Result]:
 @plugin.on_except(RequestException)
 def connection_error(error: RequestException) -> Result:
     return menu_item("Unable to reach YouTube", str(error), ICON)
+
+
+@plugin.on_except(NoResultsPage)
+def no_results_page(error: NoResultsPage) -> Result:
+    return menu_item("No results from YouTube", str(error), ICON)
 
 
 @plugin.on_method

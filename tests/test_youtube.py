@@ -174,3 +174,25 @@ def test_every_dropdown_option_has_a_code(name, codes):
     options = setting_options(name)
     assert options[0] == "Default"
     assert set(options) == set(codes)
+
+
+class FakePage:
+    def __init__(self, text):
+        self.text = text
+
+
+def test_search_gives_up_when_youtube_sends_no_results_page(settings, monkeypatch):
+    requests_made = []
+
+    def get(session, url, **kwargs):
+        requests_made.append(kwargs)
+        if len(requests_made) > 10:
+            raise AssertionError("still retrying")
+        return FakePage("<html>Before you continue to YouTube</html>")
+
+    monkeypatch.setattr(requests.Session, "get", get)
+    youtube._cache.clear()
+    (result,) = run("query", "sourdough")
+    assert result["Title"] == "No results from YouTube"
+    assert len(requests_made) == youtube.SEARCH_ATTEMPTS
+    assert all(kwargs.get("timeout") for kwargs in requests_made)
