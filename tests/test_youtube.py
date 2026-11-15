@@ -28,7 +28,7 @@ def test_results_keep_youtube_order_and_open_the_video(search):
     results = run("query", "sourdough")
     assert titles(results) == ["Sourdough for beginners", "Shaping a boule"]
     first = results[0]
-    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUJc291cmRvdWdo"
+    url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     assert first["SubTitle"] == "2 years ago - Bread Club (Length: 12:04)"
     assert first["IcoPath"] == "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg"
     assert first["CopyText"] == url
@@ -36,6 +36,14 @@ def test_results_keep_youtube_order_and_open_the_video(search):
     assert first["JsonRPCAction"]["Method"] == "Flow.Launcher.OpenUrl"
     assert first["JsonRPCAction"]["Parameters"][0] == url
     assert first["Preview"]["PreviewImagePath"] == first["IcoPath"]
+
+
+def test_mix_results_open_the_video_without_the_playlist(search):
+    mix = run("query", "sourdough")[1]
+    url = "https://www.youtube.com/watch?v=a1b2c3d4e5f"
+    assert mix["CopyText"] == url
+    assert mix["ContextData"] == [url]
+    assert mix["JsonRPCAction"]["Parameters"][0] == url
 
 
 @pytest.mark.parametrize("value", [False, "false", "False"])

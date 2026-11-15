@@ -79,7 +79,7 @@ def menu_item(title: str, subtitle: str, icon: str) -> Result:
 
 
 def video_url(video: dict) -> str:
-    return f"{BASE_URL}{video['url_suffix']}"
+    return f"{BASE_URL}/watch?v={video['id']}"
 
 
 def video_subtitle(video: dict) -> str:
