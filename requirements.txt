@@ -1,3 +1,3 @@
-flox-lib==0.19.2
-git+https://github.com/Garulf/youtube_search@feat-custom-region-language
-requests[use_chardet_on_py3]==2.27.1
+pyflowlauncher[all]==1.2.2
+requests==2.32.4
+youtube-search @ git+https://github.com/Garulf/youtube_search@9166383244e9ed9fe62ba7221157e553b96c20af
